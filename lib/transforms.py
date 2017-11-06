@@ -110,8 +110,57 @@ def text_pass_2_cardname(s, name):
 
     return s
 
+# convert word numbers, such as for quantity of tokens or drawing cards, to numbers
+# so they can, in turn, be converted to unary.
+def text_pass_3a_word_numbers(s):
+    s = s.replace(' a ', ' 1 ')
+    # Undo "It's still a land." phrase, since we want this usage of a to stay.
+    s = s.replace(' still 1 ', ' still a ')
+    # Get "Equip only as a sorcery" phrase, too.
+    s = s.replace(' as 1 ', ' as a ')
+    # Things like "from a graveyard" should also be undone
+    s = s.replace(' from 1 ', ' from a ')
+    # And then "anytime you could cast a sorcery" needs undoing, too.
+    s = s.replace(' cast 1 ', ' cast a ')
+    s = s.replace(' casts 1 ', ' casts a ')
+    # And then "controls a" texts also stat
+    s = s.replace(' control 1 ', ' control a ')
+    s = s.replace(' controls 1 ', ' controls a ')
+    # "becomes a" is also not needed to change
+    s = s.replace(' becomes 1 ', ' becomes a ')
+    s = s.replace(' become 1 ', ' become a ')
+    # "into a" also needs to use "a", not 1
+    s = s.replace(' into 1 ', ' into a ')
+    # Banding and a few other things.
+    s = s.replace(' in 1 ', ' in a ')
+    # Then we move on to other numbers
+    s = s.replace(' one ', ' 1 ')
+    s = s.replace(' one, ', ' 1, ')
+    # undo "one or more"...
+    s = s.replace(' 1 or more ', ' one or more ')
+    # Then redo "Choose one or more"
+    s = s.replace('choose one or more ', 'choose 1 or more ')
+    s = s.replace(' two ', ' 2 ')
+    s = s.replace(' two, ', ' 2, ')
+    # Undo "If two or more XXXX are tied..." scenarios"
+    s = s.replace('. if 2 or more ', '. if two or more ')
+    s = s.replace(' three ', ' 3 ')
+    s = s.replace(' four ', ' 4 ')
+    s = s.replace(' five ', ' 5 ')
+    s = s.replace(' six ', ' 6 ')
+    s = s.replace(' seven ', ' 7 ')
+    s = s.replace(' eight ', ' 8 ')
+    s = s.replace(' nine ', ' 9 ')
+    s = s.replace(' ten ', ' 10 ')
+    s = s.replace(' twelve ', ' 12 ')
+    s = s.replace(' thirteen ', ' 13 ')
+    s = s.replace(' fifteen ', ' 15 ')
+    s = s.replace(' twenty ', ' 20 ')
+    s = s.replace(' twenty-six ', ' 26 ')
+    s = s.replace(' ninety-nine ', ' 99 ')
+    return s
 
-def text_pass_3_unary(s):
+def text_pass_3b_unary(s):
     return utils.to_unary(s)
 
 
