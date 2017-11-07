@@ -112,6 +112,8 @@ def text_pass_2_cardname(s, name):
 
 # convert word numbers, such as for quantity of tokens or drawing cards, to numbers
 # so they can, in turn, be converted to unary.
+# NOTE: This is messy due to the many uses of a in English. Only some are referring to
+# the number 1 as a specific quantity instead of a threshold.
 def text_pass_3a_word_numbers(s):
     # Start by replacing a, meaning single or one.
     s = s.replace(' a ', ' 1 ')
@@ -159,6 +161,8 @@ def text_pass_3a_word_numbers(s):
     s = s.replace(' block an ', ' block 1 ')
     # Undo hundred-handed one and convert the actual number extra while we're here.
     s = s.replace(' block 1 additional ninety-nine ', ' block an additional 99 ')
+    # Handle choosing a single item, usually an opponent. But its one, so encode it
+    s = s.replace(' choose an ', ' choose 1 ')
     
     # Then we do one, since it also means 1
     s = s.replace(' one ', ' 1 ')
