@@ -113,6 +113,7 @@ def text_pass_2_cardname(s, name):
 # convert word numbers, such as for quantity of tokens or drawing cards, to numbers
 # so they can, in turn, be converted to unary.
 def text_pass_3a_word_numbers(s):
+    # Start by replacing a, meaning single or one.
     s = s.replace(' a ', ' 1 ')
     # Undo "It's still a land." phrase, since we want this usage of a to stay.
     s = s.replace(' still 1 ', ' still a ')
@@ -143,6 +144,22 @@ def text_pass_3a_word_numbers(s):
     s = s.replace(' with 1 ', ' with a ')
     # Enter the battlefield with clauses should use 1, though
     s = s.replace(' battlefield with a ', ' battlefield with 1 ')
+    
+    # Handle an, for when the item following a makes a vowel sound
+    # Do this in pieces, since it seems to be select cases that need it.
+    # Extra turns
+    s = s.replace('take an ', 'take 1 ');
+    # addtional card draw
+    s = s.replace(' draws an ',' draws 1 ')
+    # Extra combat phases
+    s = s.replace(' is an additional ', ' is 1 additional ')
+    # Extra main phases after extra combat phases/
+    s = s.replace(' followed by an ', ' followed by 1 ')
+    # Extra blocks per combat
+    s = s.replace(' block an ', ' block 1 ')
+    # Undo hundred-handed one and convert the actual number extra while we're here.
+    s = s.replace(' block 1 additional ninety-nine ', ' block an additional 99 ')
+    
     # Then we do one, since it also means 1
     s = s.replace(' one ', ' 1 ')
     s = s.replace(' one, ', ' 1, ')
@@ -150,11 +167,13 @@ def text_pass_3a_word_numbers(s):
     s = s.replace(' 1 or more ', ' one or more ')
     # Then redo "Choose one or more"
     s = s.replace('choose one or more ', 'choose 1 or more ')
+    
     # Then we move on to other numbers
     s = s.replace(' two ', ' 2 ')
     s = s.replace(' two, ', ' 2, ')
     # Undo "If two or more XXXX are tied..." scenarios"
     s = s.replace('. if 2 or more ', '. if two or more ')
+    
     s = s.replace(' three ', ' 3 ')
     s = s.replace(' four ', ' 4 ')
     s = s.replace(' five ', ' 5 ')
@@ -168,7 +187,8 @@ def text_pass_3a_word_numbers(s):
     s = s.replace(' fifteen ', ' 15 ')
     s = s.replace(' twenty ', ' 20 ')
     s = s.replace(' twenty-six ', ' 26 ')
-    s = s.replace(' ninety-nine ', ' 99 ')
+    # Hundred-handed one is now handled above
+    # s = s.replace(' ninety-nine ', ' 99 ')
     return s
 
 def text_pass_3b_unary(s):
