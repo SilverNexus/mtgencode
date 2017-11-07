@@ -133,13 +133,24 @@ def text_pass_3a_word_numbers(s):
     s = s.replace(' into 1 ', ' into a ')
     # Banding and a few other things.
     s = s.replace(' in 1 ', ' in a ')
-    # Then we move on to other numbers
+    # "Whenever a" triggers should also stay as "a", not "1"
+    s = s.replace('whenever 1 ', 'whenever a ')
+    # "becomes the target of a ..." also should stay using "a"
+    s = s.replace(' of 1 ', ' of a ')
+    # also correct combat damage to a player/creature
+    s = s.replace(' to 1 ', ' to a ')
+    # fix "with a" clauses
+    s = s.replace(' with 1 ', ' with a ')
+    # Enter the battlefield with clauses should use 1, though
+    s = s.replace(' battlefield with a ', ' battlefield with 1 ')
+    # Then we do one, since it also means 1
     s = s.replace(' one ', ' 1 ')
     s = s.replace(' one, ', ' 1, ')
     # undo "one or more"...
     s = s.replace(' 1 or more ', ' one or more ')
     # Then redo "Choose one or more"
     s = s.replace('choose one or more ', 'choose 1 or more ')
+    # Then we move on to other numbers
     s = s.replace(' two ', ' 2 ')
     s = s.replace(' two, ', ' 2, ')
     # Undo "If two or more XXXX are tied..." scenarios"
