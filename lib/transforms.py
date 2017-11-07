@@ -169,6 +169,8 @@ def text_pass_3a_word_numbers(s):
     s = s.replace(' put an ', ' put 1 ')
     # Handle X/X and 8/8 tokens, since they use "an"
     s = s.replace(' create an ', ' create 1 ')
+    # Handle things that enter the "battlefield with an" counter
+    s = s.replace(' battlefield with an ', ' battlefield with an ')
     
     # Then we do one, since it also means 1
     s = s.replace(' one ', ' 1 ')
