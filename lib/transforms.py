@@ -167,6 +167,8 @@ def text_pass_3a_word_numbers(s):
     s = s.replace('sacrifice an ', 'sacrifice 1 ')
     # Handle putting things onto permanents and/or battlefields
     s = s.replace(' put an ', ' put 1 ')
+    # Handle X/X and 8/8 tokens, since they use "an"
+    s = s.replace(' create an ', ' create 1 ')
     
     # Then we do one, since it also means 1
     s = s.replace(' one ', ' 1 ')
