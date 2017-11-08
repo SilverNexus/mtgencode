@@ -171,6 +171,8 @@ def text_pass_3a_word_numbers(s):
     s = s.replace(' create an ', ' create 1 ')
     # Handle things that enter the "battlefield with an" counter
     s = s.replace(' battlefield with an ', ' battlefield with an ')
+    # Searching library for a single card
+    s = s.replace(' library for an ', ' library for 1 ')
     
     # Then we do one, since it also means 1
     s = s.replace(' one ', ' 1 ')
