@@ -146,6 +146,10 @@ def text_pass_3a_word_numbers(s):
     s = s.replace(' with 1 ', ' with a ')
     # Enter the battlefield with clauses should use 1, though
     s = s.replace(' battlefield with a ', ' battlefield with 1 ')
+    # Or effects are usually triggers, so use "a" as a threshold quantifier
+    s = s.replace(' or 1 ', ' or a ')
+    # Except searching effects, which are usually a card or another card.
+    s = s.replace(' card or a ', ' card or 1 ')
     
     # Handle an, for when the item following a makes a vowel sound
     # Do this in pieces, since it seems to be select cases that need it.
