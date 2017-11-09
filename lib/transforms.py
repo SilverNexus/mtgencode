@@ -150,6 +150,8 @@ def text_pass_3a_word_numbers(s):
     s = s.replace(' or 1 ', ' or a ')
     # Except searching effects, which are usually a card or another card.
     s = s.replace(' card or a ', ' card or 1 ')
+    # 'That's' clauses are usually copies, so numeric quantity is useless.
+    s = s.replace(' that\'s 1 ', ' that\'s a ')
     
     # Handle an, for when the item following a makes a vowel sound
     # Do this in pieces, since it seems to be select cases that need it.
