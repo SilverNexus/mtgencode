@@ -152,6 +152,8 @@ def text_pass_3a_word_numbers(s):
     s = s.replace(' card or a ', ' card or 1 ')
     # 'That's' clauses are usually copies, so numeric quantity is useless.
     s = s.replace(' that\'s 1 ', ' that\'s a ')
+    # "A source" seems to be better described using "a"
+    s = s.replace(' 1 source ', ' a source ')
     
     # Handle an, for when the item following a makes a vowel sound
     # Do this in pieces, since it seems to be select cases that need it.
@@ -185,14 +187,16 @@ def text_pass_3a_word_numbers(s):
     s = s.replace(' one, ', ' 1, ')
     # undo "one or more"...
     s = s.replace(' 1 or more ', ' one or more ')
-    # Then redo "Choose one or more"
-    s = s.replace('choose one or more ', 'choose 1 or more ')
+    # Then undo any other "choose one" effects. This breaks the choose encoding otherwise.
+    s = s.replace('choose 1 ', 'choose one ')
     
     # Then we move on to other numbers
     s = s.replace(' two ', ' 2 ')
     s = s.replace(' two, ', ' 2, ')
     # Undo "If two or more XXXX are tied..." scenarios"
     s = s.replace('. if 2 or more ', '. if two or more ')
+    # Replace choose two as well, to ensure the special choose encoding works.
+    s = s.replace('choose 2 ', 'choose two ')
     
     s = s.replace(' three ', ' 3 ')
     s = s.replace(' four ', ' 4 ')
