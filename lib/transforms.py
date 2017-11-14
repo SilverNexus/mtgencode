@@ -156,6 +156,8 @@ def text_pass_3a_word_numbers(s):
     s = s.replace(' 1 source ', ' a source ')
     # "Is a" clauses really are more clear without encoding "a"
     s = s.replace(' is 1 ', ' is a ')
+    # "it's a" clauses should be caught, too
+    s = s.replace(" it's 1 ", "it's a ")
     
     # Handle an, for when the item following a makes a vowel sound
     # Do this in pieces, since it seems to be select cases that need it.
