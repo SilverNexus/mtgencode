@@ -184,7 +184,7 @@ def text_pass_3a_word_numbers(s):
     # Handle X/X and 8/8 tokens, since they use "an"
     s = s.replace(' create an ', ' create 1 ')
     # Handle things that enter the "battlefield with an" counter
-    s = s.replace(' battlefield with an ', ' battlefield with an ')
+    s = s.replace(' battlefield with an ', ' battlefield with 1 ')
     # Searching library for a single card
     s = s.replace(' library for an ', ' library for 1 ')
     
