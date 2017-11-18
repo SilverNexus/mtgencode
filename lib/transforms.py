@@ -115,7 +115,15 @@ def text_pass_2_cardname(s, name):
 # NOTE: This is messy due to the many uses of a in English. Only some are referring to
 # the number 1 as a specific quantity instead of a threshold.
 def text_pass_3a_word_numbers(s):
-    # Start by replacing a, meaning single or one.
+    # Start by replacing one. Do this first to ensure we keep modal spells/abilities separate from other things
+    s = s.replace(' one ', ' 1 ')
+    s = s.replace(' one, ', ' 1, ')
+    # undo "one or more"...
+    s = s.replace(' 1 or more ', ' one or more ')
+    # Then undo any other "choose one" effects. This breaks the choose encoding otherwise.
+    s = s.replace('choose 1 ', 'choose one ')
+
+    # Then we do "a", since it also means 1
     s = s.replace(' a ', ' 1 ')
     # Undo "It's still a land." phrase, since we want this usage of a to stay.
     s = s.replace(' still 1 ', ' still a ')
@@ -178,6 +186,11 @@ def text_pass_3a_word_numbers(s):
     # Handle choosing a single item, usually an opponent. But its one, so encode it
     s = s.replace(' choose an ', ' choose 1 ')
     s = s.replace(' chooses an ', ' chooses 1 ')
+    # Handle an enchantment or artifact in a list of items chosen
+    # This requires a regular expression to actually do, since we sometimes have
+    # a list of conditions where the "an" stands for "at least one", and sometimes
+    # we are choosing exactly one of the type.
+    s = re.sub(r' chooses (.*), an ', r' chooses \1, 1 ', s)
     # Handle sacrifice effects
     s = s.replace('sacrifice an ', 'sacrifice 1 ')
     # Handle putting things onto permanents and/or battlefields
@@ -188,15 +201,6 @@ def text_pass_3a_word_numbers(s):
     s = s.replace(' battlefield with an ', ' battlefield with 1 ')
     # Searching library for a single card
     s = s.replace(' library for an ', ' library for 1 ')
-    
-    # TODO: Choose changes should be before "an" handling
-    # Then we do one, since it also means 1
-    s = s.replace(' one ', ' 1 ')
-    s = s.replace(' one, ', ' 1, ')
-    # undo "one or more"...
-    s = s.replace(' 1 or more ', ' one or more ')
-    # Then undo any other "choose one" effects. This breaks the choose encoding otherwise.
-    s = s.replace('choose 1 ', 'choose one ')
     
     # Then we move on to other numbers
     s = s.replace(' two ', ' 2 ')
