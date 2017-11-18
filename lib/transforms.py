@@ -177,6 +177,7 @@ def text_pass_3a_word_numbers(s):
     s = s.replace(' block 1 additional ninety-nine ', ' block an additional 99 ')
     # Handle choosing a single item, usually an opponent. But its one, so encode it
     s = s.replace(' choose an ', ' choose 1 ')
+    s = s.replace(' chooses an ', ' chooses 1 ')
     # Handle sacrifice effects
     s = s.replace('sacrifice an ', 'sacrifice 1 ')
     # Handle putting things onto permanents and/or battlefields
@@ -188,6 +189,7 @@ def text_pass_3a_word_numbers(s):
     # Searching library for a single card
     s = s.replace(' library for an ', ' library for 1 ')
     
+    # TODO: Choose changes should be before "an" handling
     # Then we do one, since it also means 1
     s = s.replace(' one ', ' 1 ')
     s = s.replace(' one, ', ' 1, ')
