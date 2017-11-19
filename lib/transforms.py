@@ -168,6 +168,8 @@ def text_pass_3a_word_numbers(s):
     s = s.replace(" it's 1 ", " it's a ")
     # "that a land" clauses and a few other "that a" clauses should really use "a"
     s = s.replace(" that 1 ", " that a ")
+    # Handle if conditions that really want one or more to be true.
+    s = s.replace(" if 1 ", " if a ")
     
     # Handle an, for when the item following a makes a vowel sound
     # Do this in pieces, since it seems to be select cases that need it.
