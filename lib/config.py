@@ -28,7 +28,7 @@ rarity_uncommon_marker = 'N'
 rarity_rare_marker = 'A'
 rarity_mythic_marker = 'Y'
 # with some crazy exceptions
-rarity_special_marker = 'E'
+rarity_special_marker = 'I'
 rarity_basic_land_marker = 'L'
 
 # unambiguous synonyms
@@ -42,7 +42,7 @@ unary_exceptions = {
     25 : 'twenty' + dash_marker + 'five',
     30 : 'thirty',
     40 : 'forty',
-    50 : 'fifly',
+    50 : 'fifty',
     100: 'one hundred',
     200: 'two hundred',
 }
