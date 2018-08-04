@@ -83,6 +83,8 @@ def text_pass_2_cardname(s, name):
         'rashka',
         'phage',
         'shimatsu',
+        'hazoret',
+        'rakdos',
         # random and arbitrary: they have a last name, 1996 world champion, etc.
         'world champion',
         'axelrod',
@@ -115,6 +117,18 @@ def text_pass_2_cardname(s, name):
 # NOTE: This is messy due to the many uses of a in English. Only some are referring to
 # the number 1 as a specific quantity instead of a threshold.
 def text_pass_3a_word_numbers(s):
+    # Handle Zero
+    # Take some instances of 'no' and quantify them as 0
+    s = s.replace(' gains no life', ' gains 0 life')
+    s = s.replace(' share no ', ' share 0 ')
+    s = s.replace(' no cards', ' 0 cards')
+    s = s.replace('if no spells', 'if 0 spells')
+    s = s.replace(' control no ', ' control 0 ')
+    s = s.replace('if no creatures', 'if 0 creatures')
+    s = s.replace('there are no ', 'there are 0 ')
+    # Triggers for having no counters of a certain type.
+    s = s.replace(r' has no ((\w+)|([\+\-]\d+\/[\+\-]\d+)) counters', r'has 0 \1 counters')
+
     # Start by replacing one. Do this first to ensure we keep modal spells/abilities separate from other things
     s = s.replace(' one ', ' 1 ')
     s = s.replace(' one, ', ' 1, ')
@@ -122,6 +136,22 @@ def text_pass_3a_word_numbers(s):
     s = s.replace(' 1 or more ', ' one or more ')
     # Then undo any other "choose one" effects. This breaks the choose encoding otherwise.
     s = s.replace('choose 1 ', 'choose one ')
+    s = s.replace('opponent chooses 1 ~', 'opponent chooses one ~')
+    # Then reapply "Choose one of them" clauses
+    s = s.replace('choose one of ', 'choose 1 of ')
+    # And lets hit "One or two"
+    s = s.replace('one or two ', '1 or 2 ')
+    # Handle Krark's Thumb
+    s = s.replace(' ignore one', ' ignore 1')
+    # Handle "that many plus one"
+    s = s.replace(' plus one', ' plus 1')
+    # And a replacement effect "instead of one"
+    s = s.replace(' instead of one', ' instead of 1')
+    # Also changes of maximum hand size.
+    s = s.replace(' reduced by one', ' reduced by 1')
+    s = s.replace(' increased by one', ' increased by 1')
+    # Also handle the opponent choosing one of several cards you reveal.
+    s = s.replace(' opponent chooses one.', ' opponent chooses 1.')
 
     # Then we do "a", since it also means 1
     s = s.replace(' a ', ' 1 ')
@@ -150,6 +180,12 @@ def text_pass_3a_word_numbers(s):
     s = s.replace(' of 1 ', ' of a ')
     # also correct combat damage to a player/creature
     s = s.replace(' to 1 ', ' to a ')
+    # Except when you are targeting up to one
+    s = s.replace(' up to a ', ' up to 1 ')
+    # Also avoid a player controls being a 1
+    s = s.replace(' 1 player control', ' a player control')
+    # other than a should also be handled
+    s = s.replace('other than 1 ', 'other than a ')
     # fix "with a" clauses
     s = s.replace(' with 1 ', ' with a ')
     # Enter the battlefield with clauses should use 1, though
@@ -170,7 +206,10 @@ def text_pass_3a_word_numbers(s):
     s = s.replace(" that 1 ", " that a ")
     # Handle if conditions that really want one or more to be true.
     s = s.replace(" if 1 ", " if a ")
-    
+    # "Reveals a number of" clauses should not be quantified.
+    s = s.replace('reveals 1 number of ', 'reveals a number of ')
+    s = s.replace('reveal 1 number of ', 'reveal a number of ')
+
     # Handle an, for when the item following a makes a vowel sound
     # Do this in pieces, since it seems to be select cases that need it.
     # Extra turns
@@ -203,7 +242,9 @@ def text_pass_3a_word_numbers(s):
     s = s.replace(' battlefield with an ', ' battlefield with 1 ')
     # Searching library for a single card
     s = s.replace(' library for an ', ' library for 1 ')
-    
+    # Play an additional can be play 1 additional
+    s = s.replace('play an additional', 'play 1 additional')
+
     # Then we move on to other numbers
     s = s.replace(' two ', ' 2 ')
     s = s.replace(' two, ', ' 2, ')
@@ -211,12 +252,32 @@ def text_pass_3a_word_numbers(s):
     s = s.replace('. if 2 or more ', '. if two or more ')
     # Replace choose two as well, to ensure the special choose encoding works.
     s = s.replace('choose 2 ', 'choose two ')
-    
+    # Except Seal of the Guildpact has us choose two colors. This can be quantified.
+    s = s.replace('choose two colors', 'choose 2 colors')
+    # And also choose two target should be quantified.
+    s = s.replace('choose two target', 'choose 2 target')
+    # And choose two of those
+    s = s.replace('choose two of ', 'choose 2 of ') 
+
+    # About two times three is at the end of a statement. We need to handle those.
     s = s.replace(' three ', ' 3 ')
+    s = s.replace(' three.', ' 3.')
+
+    # and some hand size and other modifiers also occur at statement ends for four.
     s = s.replace(' four ', ' 4 ')
+    s = s.replace(' four.', ' 4.')
+
+    # Monocolor god devotions for Theros gods has a comma after five.
     s = s.replace(' five ', ' 5 ')
+    s = s.replace(' five,', ' 5,')
+
     s = s.replace(' six ', ' 6 ')
+
+    # Jin-Gitaxias and multicolored Theros gods have punctuation after the number
     s = s.replace(' seven ', ' 7 ')
+    s = s.replace(' seven,', ' 7,')
+    s = s.replace(' seven.', ' 7.')
+
     s = s.replace(' eight ', ' 8 ')
     s = s.replace(' nine ', ' 9 ')
     s = s.replace(' ten ', ' 10 ')
@@ -389,6 +450,7 @@ def text_pass_5_counters(s):
         'shred counter',
         'pupa counter',
         'crystal counter',
+        'egg counter'
     ]
     usedcounters = []
     for countername in allcounters:
