@@ -74,7 +74,7 @@ def default_exclude_types(cardtype):
     return cardtype in ['conspiracy']
 
 def default_exclude_layouts(layout):
-    return layout in ['token', 'plane', 'scheme', 'phenomenon', 'vanguard']
+    return layout in ['token', 'plane', 'scheme', 'phenomenon', 'vanguard', 'planar']
 
 # centralized logic for opening files of cards, either encoded or json
 def mtg_open_file(fname, verbose = False,
