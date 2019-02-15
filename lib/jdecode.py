@@ -68,7 +68,7 @@ def mtg_open_json(fname, verbose = False):
 
 # filters to ignore some undesirable cards, only used when opening json
 def default_exclude_sets(cardset):
-    return cardset == 'Unglued' or cardset == 'Unhinged' or cardset == 'Celebration' or cardset == 'Unstable'
+    return cardset in ['Unglued', 'Unhinged', 'Celebration', 'Unstable', 'Happy Holidays']
 
 def default_exclude_types(cardtype):
     return cardtype in ['conspiracy']
