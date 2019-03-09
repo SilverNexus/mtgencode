@@ -450,7 +450,21 @@ def text_pass_5_counters(s):
         'shred counter',
         'pupa counter',
         'crystal counter',
-        'egg counter'
+        'egg counter',
+        'plot counter',
+        'hit counter',
+        'brick counter',
+        'unity counter',
+        'prey counter',
+        'slumber counter',
+        'vortex counter',
+        'landmark counter',
+        'hour counter',
+        'isolation counter',
+        'fury counter',
+        'silver counter',
+        'experience counter',
+        'spite counter'
     ]
     usedcounters = []
     for countername in allcounters:
@@ -641,6 +655,7 @@ def text_pass_11_linetrans(s):
             line = line.replace('; and', ', and') # wonky protection
             line = line.replace('; from', ', from') # wonky protection
             line = line.replace('upkeep;', 'upkeep,') # wonky protection
+            line = line.replace('; land; or planeswalker', ', land, or planeswalker') # Imprisoned in the Moon
             sublines = line.split(';')
             for subline in sublines:
                 subline = subline.strip()
