@@ -53,14 +53,14 @@ rarity_special_marker = config.rarity_special_marker
 rarity_basic_land_marker = config.rarity_basic_land_marker
 
 json_rarity_map = {
-    'Common' : rarity_common_marker,
     'common' : rarity_common_marker,
-    'Uncommon' : rarity_uncommon_marker,
+    'Common' : rarity_common_marker,
     'uncommon' : rarity_uncommon_marker,
-    'Rare' : rarity_rare_marker,
+    'Uncommon' : rarity_uncommon_marker,
     'rare' : rarity_rare_marker,
-    'Mythic Rare' : rarity_mythic_marker,
+    'Rare' : rarity_rare_marker,
     'mythic' : rarity_mythic_marker,
+    'Mythic Rare' : rarity_mythic_marker,
     'Special' : rarity_special_marker,
     'Basic Land' : rarity_basic_land_marker,
 }
@@ -125,7 +125,7 @@ def to_unary(s, warn = False):
         elif i > unary_max:
             i = unary_max
             if warn:
-                print s
+                print(s)
             s = s.replace(n, unary_marker + unary_counter * i)
         else:
             s = s.replace(n, unary_marker + unary_counter * i)
@@ -134,8 +134,8 @@ def to_unary(s, warn = False):
 def from_unary(s):
     numbers = re.findall(re.escape(unary_marker + unary_counter) + '*', s)
     # again, largest first so we don't replace substrings and break everything
-    for n in sorted(numbers, cmp = lambda x,y: cmp(len(x), len(y)), reverse = True):
-        i = (len(n) - len(unary_marker)) / len(unary_counter)
+    for n in sorted(numbers, reverse = True):
+        i = (len(n) - len(unary_marker)) // len(unary_counter)
         s = s.replace(n, str(i))
     return s
 

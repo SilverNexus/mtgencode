@@ -19,7 +19,7 @@ def main(fname, oname = None, verbose = True, encoding = 'std',
     # there is a sane thing to do here (namely, produce both at the same time)
     # but we don't support it yet.
     if for_mse and for_html:
-        print 'ERROR - decode.py - incompatible formats "mse" and "html"'
+        print('ERROR - decode.py - incompatible formats "mse" and "html"')
         return
 
     fmt_ordered = cardlib.fmt_ordered_default
@@ -52,16 +52,16 @@ def main(fname, oname = None, verbose = True, encoding = 'std',
         namediff = Namediff()
         cbow = CBOW()
         if verbose:
-            print 'Computing nearest names...'
+            print('Computing nearest names...')
         nearest_names = namediff.nearest_par(map(lambda c: c.name, cards), n=3)
         if verbose:
-            print 'Computing nearest cards...'
+            print('Computing nearest cards...')
         nearest_cards = cbow.nearest_par(cards)
         for i in range(0, len(cards)):
             cards[i].nearest_names = nearest_names[i]
             cards[i].nearest_cards = nearest_cards[i]
         if verbose:
-            print '...Done.'
+            print('...Done.')
 
     def hoverimg(cardname, dist, nd):
         truename = nd.names[cardname]
@@ -119,7 +119,7 @@ def main(fname, oname = None, verbose = True, encoding = 'std',
             else:
                 fstring = card.format(gatherer = gatherer, for_forum = for_forum,
                                       vdump = vdump, for_html = for_html)
-                writer.write((fstring + '\n').encode('utf-8'))
+                writer.write(str(fstring + '\n'))
 
             if creativity:
                 cstring = '~~ closest cards ~~\n'
@@ -132,9 +132,9 @@ def main(fname, oname = None, verbose = True, encoding = 'std',
                     cstring += hoverimg(cardname, dist, namediff)
                 if for_mse:
                     cstring = ('\n\n' + cstring[:-1]).replace('\n', '\n\t\t')
-                writer.write(cstring.encode('utf-8'))
+                writer.write(cstring)
 
-            writer.write('\n'.encode('utf-8'))
+            writer.write('\n')
 
         if for_mse:
             # more formatting info
@@ -147,7 +147,7 @@ def main(fname, oname = None, verbose = True, encoding = 'std',
                                       vdump = vdump, for_html = for_html)
             if creativity:
                 fstring = fstring[:-6] # chop off the closing </div> to stick stuff in
-            writer.write((fstring + '\n').encode('utf-8'))
+            writer.write(fstring + '\n')
 
             if creativity:
                 cstring = '~~ closest cards ~~\n<br>\n'
@@ -160,9 +160,9 @@ def main(fname, oname = None, verbose = True, encoding = 'std',
                 for dist, cardname in nearest:
                     cstring += hoverimg(cardname, dist, namediff)
                 cstring = '<hr><div>' + cstring + '</div>\n</div>'
-                writer.write(cstring.encode('utf-8'))
+                writer.write(cstring)
 
-            writer.write('\n'.encode('utf-8'))
+            writer.write('\n')
 
     # Sorting by colors
     def sort_colors(card_set):
@@ -238,17 +238,17 @@ def main(fname, oname = None, verbose = True, encoding = 'std',
 
     if oname:
         if for_html:
-            print oname
+            print(oname)
             # if ('.html' != oname[-])
             #     oname += '.html'
         if verbose:
-            print 'Writing output to: ' + oname
+            print('Writing output to: ' + oname)
         with open(oname, 'w') as ofile:
             writecards(ofile)
         if for_mse:
             # Copy whatever output file is produced, name the copy 'set' (yes, no extension).
             if os.path.isfile('set'):
-                print 'ERROR: tried to overwrite existing file "set" - aborting.'
+                print('ERROR: tried to overwrite existing file "set" - aborting.')
                 return
             shutil.copyfile(oname, 'set')
             # Use the freaky mse extension instead of zip.
@@ -258,7 +258,7 @@ def main(fname, oname = None, verbose = True, encoding = 'std',
                     zf.write('set') 
                 finally:
                     if verbose:
-                        print 'Made an MSE set file called ' + oname + '.mse-set.'
+                        print('Made an MSE set file called ' + oname + '.mse-set.')
                     # The set file is useless outside the .mse-set, delete it.
                     os.remove('set') 
     else:

@@ -172,9 +172,9 @@ def fields_check_valid(fields):
         if 'creature' in value:
             iscreature = True
         elif field_subtypes in fields:
-	    for idx, value in fields[field_subtypes]:
-	        if 'vehicle' in value:
-		    iscreature = True
+            for idx, value in fields[field_subtypes]:
+                if 'vehicle' in value:
+                    iscreature = True
     if iscreature:
         return field_pt in fields
     else:
@@ -672,11 +672,11 @@ class Card:
                 
             outstr += linebreak
 
-            basetypes = map(str.capitalize, self.__dict__[field_types])
+            basetypes = list(map(str.capitalize, self.__dict__[field_types]))
             if vdump and len(basetypes) < 1:
                 basetypes = ['_NOTYPE_']
             
-            outstr += ' '.join(map(str.capitalize, self.__dict__[field_supertypes]) + basetypes)
+            outstr += ' '.join(list(map(str.capitalize, self.__dict__[field_supertypes])) + basetypes)
 
             if self.__dict__[field_subtypes]:
                 outstr += (' ' + utils.dash_marker + ' ' + 

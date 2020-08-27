@@ -157,17 +157,17 @@ class CBOW:
         self.cardvecs = []
 
         if self.verbose:
-            print 'Building a cbow model...'
+            print('Building a cbow model...')
 
         if self.verbose:
-            print '  Reading binary vector data from: ' + vector_fname
+            print('  Reading binary vector data from: ' + vector_fname)
         (vocab, vecs) = read_vector_file(vector_fname)
         self.vocab = vocab
         self.vecs = vecs
         
         if self.verbose:
-            print '  Reading encoded cards from: ' + card_fname
-            print '  They\'d better be in the same order as the file used to build the vector model!'
+            print('  Reading encoded cards from: ' + card_fname)
+            print('  They\'d better be in the same order as the file used to build the vector model!')
         with open(card_fname, 'rt') as f:
             text = f.read()
         for card_src in text.split(utils.cardsep):
@@ -179,10 +179,10 @@ class CBOW:
                                                     card.vectorize()))]
                 
         if self.verbose:
-            print '... Done.'
-            print '  vocab size: ' + str(len(self.vocab))
-            print '  raw vecs:   ' + str(len(self.vecs))
-            print '  card vecs:  ' + str(len(self.cardvecs))
+            print('... Done.')
+            print('  vocab size: ' + str(len(self.vocab)))
+            print('  raw vecs:   ' + str(len(self.vecs)))
+            print('  card vecs:  ' + str(len(self.cardvecs)))
 
     def nearest(self, card, n=5):
         return f_nearest(card, self.vocab, self.vecs, self.cardvecs, n)
